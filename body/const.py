@@ -1,0 +1,4 @@
+IMAGE_WIDTH = 640
+IMAGE_HEIGHT = 480
+
+DRIVING_UP_AREA = dict(x=200, y=230, width=300, height=250)
