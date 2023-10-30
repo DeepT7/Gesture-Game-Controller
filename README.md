@@ -1,55 +1,14 @@
-# Body gesture to keyboard control
+# Body gesture to play game
 
 Convert real-time body gestures such as walking, squat, swing hands, tilt head,... to keyboard input using Mediapipe Pose solution.
-
-## Demo
-
-RPG game
-
-[![Watch the video](https://img.youtube.com/vi/nMx1VlgjfBw/default.jpg)](https://youtu.be/nMx1VlgjfBw)
-
-Racing game
-
-[![Watch the video](https://img.youtube.com/vi/gAEEKOdsAxs/default.jpg)](https://youtu.be/gAEEKOdsAxs)
-
-## Installation
-
-Create an virtual environment (optional)
-
-```sh
-virtualenv venv
-.\venv\Scripts\activate
-```
-
-Install packages
-
-```sh
-pip install -r requirements.txt
-```
-
-## Run the application
-
-```sh
-python window.py
-```
-
-## Configuration
-
-In `window.py` edit these objects:
-
-- `mp_config`: Edit mediapipe pose configuration
-- `command_key_mappings_list`: Edit input controller
-- `events_config`: Edit keyboard events configuration
 
 ## Supported body gestures
 
 ### Head
 
-`body/face.py`: Tilt head in left/right
+Tilt head in left/right
 
 ### Hands
-
-`body/arm.py`
 
 - Swing hands
   - Left: swing hand from left to right
@@ -66,8 +25,6 @@ In `window.py` edit these objects:
 
 ### Legs
 
-`body/leg.py`
-
 - Walking:
   - Up: walking with 2 hands down
   - Left: walking with only left hand up 90 degree
@@ -75,9 +32,3 @@ In `window.py` edit these objects:
   - Backwards: : walking with both hands up 90 degree
 - Squat
 
-## Improvements
-
-- Edit mediapipe configuration in app
-- Allow edit input controller in app
-- Edit gesture detection thresholds
-- Edit pressing keyboard interval for each gesture
