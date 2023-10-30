@@ -1,5 +1,3 @@
-# Body gesture to play game
-
 Convert real-time body gestures such as walking, squat, swing hands, tilt head,... to keyboard input using Mediapipe Pose solution.
 
 ## Supported body gestures
