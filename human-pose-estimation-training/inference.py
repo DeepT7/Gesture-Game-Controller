@@ -1,5 +1,5 @@
 import argparse
-
+import json
 import cv2
 import numpy as np
 import torch
@@ -78,7 +78,7 @@ def infer_fast(net, img, net_input_height_size, stride, upsample_ratio, cpu,
     return heatmaps, pafs, scale, pad
 
 
-def run_demo(net, image_provider, height_size, cpu, track, smooth):
+def run_demo(net, image_provider, height_size, cpu, track, smooth, keypoint_coords):
     net = net.eval()
     if not cpu:
         net = net.cuda()
@@ -113,10 +113,17 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
             pose = Pose(pose_keypoints, pose_entries[n][18])
             current_poses.append(pose)
 
+        pose_coords = []
+        for i, pose in enumerate(current_poses):
+            pose_coords.append({f"person_{i+1}":(pose.keypoints).tolist()})
+        with open('keypoint_coordinates.json', 'w') as f:
+            json.dump(pose_coords, f)
+
         if track:
             track_poses(previous_poses, current_poses, smooth=smooth)
             previous_poses = current_poses
         for pose in current_poses:
+            # Draw pose for each person
             pose.draw(img)
         img = cv2.addWeighted(orig_img, 0.6, img, 0.4, 0)
         for pose in current_poses:
@@ -137,11 +144,19 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
 
 
 if __name__ == '__main__':
-
-    checkpoint_path = 'models/checkpoint_iter_5000_new.pth'
+    kpt_names = ['nose', 'neck',
+                 'r_sho', 'r_elb', 'r_wri', 'l_sho', 'l_elb', 'l_wri',
+                 'r_hip', 'r_knee', 'r_ank', 'l_hip', 'l_knee', 'l_ank',
+                 'r_eye', 'l_eye',
+                 'r_ear', 'l_ear']
+    kpt_cords = {}
+    for kpt in kpt_names:
+        kpt_cords[kpt] = []
+    checkpoint_path = 'human-pose-estimation-training/models/checkpoint_iter_5000_new.pth'
     height_size = 256
-    video = 0
-    images = ''
+    # video = 0
+    video = 'human-pose-estimation-training/dancing.mp4'
+    images = 'hor.jpg'
     cpu = True 
     track = 1 
     smooth = 1
@@ -159,4 +174,4 @@ if __name__ == '__main__':
     else:
         track = 0
 
-    run_demo(net, frame_provider, height_size, cpu, track, smooth)
+    run_demo(net, frame_provider, height_size, cpu, track, smooth, kpt_cords)
