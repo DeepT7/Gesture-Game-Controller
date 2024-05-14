@@ -34,9 +34,6 @@ class ArmState:
         shoulder,
         elbow,
         wrist,
-        pinky,
-        index,
-        thumb,
         shoulder_angle,
         elbow_angle,
     ):
@@ -88,12 +85,6 @@ class ArmsState:
         right_elbow,
         left_wrist,
         right_wrist,
-        left_pinky,
-        right_pinky,
-        left_index,
-        right_index,
-        left_thumb,
-        right_thumb,
         left_shoulder_angle,
         right_shoulder_angle,
         left_elbow_angle,
@@ -104,9 +95,6 @@ class ArmsState:
             left_shoulder,
             left_elbow,
             left_wrist,
-            left_pinky,
-            left_index,
-            left_thumb,
             left_shoulder_angle,
             left_elbow_angle,
         )
@@ -115,64 +103,61 @@ class ArmsState:
             right_shoulder,
             right_elbow,
             right_wrist,
-            right_pinky,
-            right_index,
-            right_thumb,
             right_shoulder_angle,
             right_elbow_angle,
         )
 
-        left_right_hands_slope = calculate_slope(left_thumb, right_thumb)
+        # left_right_hands_slope = calculate_slope(left_thumb, right_thumb)
 
-        if mode == "Driving":
-            if is_landmarks_closed(
-                [
-                    left_pinky,
-                    right_pinky,
-                    left_index,
-                    right_index,
-                    left_thumb,
-                    right_thumb,
-                ],
-                0.45,
-            ):
-                self.driving_hands = True
-                # calculate and draw circle to simulate driving
-                cv2.circle(
-                    image,
-                    (
-                        int((left_thumb[0] + right_thumb[0]) / 2 * IMAGE_WIDTH),
-                        int((left_thumb[1] + right_thumb[1]) / 2 * IMAGE_HEIGHT),
-                    ),
-                    90,
-                    (255, 0, 0),
-                    5,
-                )
+        # if mode == "Driving":
+        #     if is_landmarks_closed(
+        #         [
+        #             left_pinky,
+        #             right_pinky,
+        #             left_index,
+        #             right_index,
+        #             left_thumb,
+        #             right_thumb,
+        #         ],
+        #         0.45,
+        #     ):
+        #         self.driving_hands = True
+        #         # calculate and draw circle to simulate driving
+        #         cv2.circle(
+        #             image,
+        #             (
+        #                 int((left_thumb[0] + right_thumb[0]) / 2 * IMAGE_WIDTH),
+        #                 int((left_thumb[1] + right_thumb[1]) / 2 * IMAGE_HEIGHT),
+        #             ),
+        #             90,
+        #             (255, 0, 0),
+        #             5,
+        #         )
 
-                # 2 hands are in driving up area
-                if is_landmarks_in_rectangle(
-                    [
-                        left_pinky,
-                        right_pinky,
-                        left_index,
-                        right_index,
-                        left_thumb,
-                        right_thumb,
-                    ],
-                    **DRIVING_UP_AREA,
-                ):
-                    events.add("d2_driving_up")
+        #         # 2 hands are in driving up area
+        #         if is_landmarks_in_rectangle(
+        #             [
+        #                 left_pinky,
+        #                 right_pinky,
+        #                 left_index,
+        #                 right_index,
+        #                 left_thumb,
+        #                 right_thumb,
+        #             ],
+        #             **DRIVING_UP_AREA,
+        #         ):
+        #             events.add("d2_driving_up")
 
-                if left_right_hands_slope > self.DRIVING_SLOPE_ANGLE:
-                    events.add("d1_driving_left")
-                elif left_right_hands_slope < -self.DRIVING_SLOPE_ANGLE:
-                    events.add("d1_driving_right")
-                else:
-                    events.add("d1_driving_default")
-            else:
-                self.driving_hands = False
+        #         if left_right_hands_slope > self.DRIVING_SLOPE_ANGLE:
+        #             events.add("d1_driving_left")
+        #         elif left_right_hands_slope < -self.DRIVING_SLOPE_ANGLE:
+        #             events.add("d1_driving_right")
+        #         else:
+        #             events.add("d1_driving_default")
+        #     else:
+        #         self.driving_hands = False
 
-            return
+        #     return
 
         # if left_right_hands_slope < 10 and is_landmarks_closed(
         #     [

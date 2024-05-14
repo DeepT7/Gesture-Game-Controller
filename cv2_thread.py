@@ -52,31 +52,6 @@ class Cv2Thread(QThread):
                 image.flags.writeable = True
                 image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-                if (
-                    self.mp_config["enable_segmentation"]
-                    and results.segmentation_mask is not None
-                ):
-                    try:
-                        # Draw selfie segmentation on the background image.
-                        # To improve segmentation around boundaries, consider applying a joint
-                        # bilateral filter to "results.segmentation_mask" with "image".
-                        # results.segmentation_mask is a binary image that indicates the pixels
-                        # that belongs to the detected person (0 or 1)
-                        condition = (
-                            np.stack((results.segmentation_mask,) * 3, axis=-1) > 0.1
-                        )
-                        # The background can be customized.
-                        #   a) Load an image (with the same width and height of the input image) to
-                        #      be the background, e.g., bg_image = cv2.imread('/path/to/image/file')
-                        #   b) Blur the input image by applying image filtering, e.g.,
-                        #      bg_image = cv2.GaussianBlur(image,(55,55),0)
-                        bg_image = cv2.GaussianBlur(image, (55, 55), 0)
-                        if bg_image is None:
-                            bg_image = np.zeros(image.shape, dtype=np.uint8)
-                            bg_image[:] = BG_COLOR
-                        image = np.where(condition, image, bg_image)
-                    except Exception:
-                        print(traceback.format_exc())
 
                 # Draw landmark annotation on the image.
                 mp_drawing.draw_landmarks(

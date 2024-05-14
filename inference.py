@@ -147,8 +147,8 @@ if __name__ == '__main__':
     checkpoint_path = 'models/checkpoint_iter_5000_new.pth'
     height_size = 256
     # video = 0
-    video = 'dancing.mp4'
-    images = 'hor.jpg'
+    video = 'data/dancing.mp4'
+    images = 'data/hor.jpg'
     cpu = True 
     track = 1 
     smooth = 1

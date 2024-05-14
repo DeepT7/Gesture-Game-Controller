@@ -45,97 +45,82 @@ class BodyState:
     def calculate(self, image, results):
         # Extract pose landmarks
         try:
-            if not results.pose_landmarks:
+            if results.shape[0] == 0:
                 return
-            pose_landmarks = results.pose_landmarks.landmark
+            pose_landmarks = results
 
             # Get coordinates
-            nose = get_landmark_coordinates(pose_landmarks, mp_pose.PoseLandmark.NOSE)
+            # nose = get_landmark_coordinates(pose_landmarks, mp_pose.PoseLandmark.NOSE)
+            nose = pose_landmarks[0]
+            # left_eye = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.LEFT_EYE
+            # )
+            left_eye = pose_landmarks[15]
+            # right_eye = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.RIGHT_EYE
+            # )
+            right_eye = pose_landmarks[14]
 
-            left_eye = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.LEFT_EYE
-            )
-            right_eye = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.RIGHT_EYE
-            )
+            # left_ear = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.LEFT_EAR
+            # )
+            left_ear = pose_landmarks[17]
+            # right_ear = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.RIGHT_EAR
+            # )
+            right_ear = pose_landmarks[16]
 
-            left_ear = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.LEFT_EAR
-            )
-            right_ear = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.RIGHT_EAR
-            )
+            # left_shoulder = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.LEFT_SHOULDER
+            # )
 
-            mouth_left = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.MOUTH_LEFT
-            )
-            mouth_right = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.MOUTH_RIGHT
-            )
+            left_shoulder = pose_landmarks[5]
+            # right_shoulder = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.RIGHT_SHOULDER
+            # )
+            right_shoulder = pose_landmarks[2]
+            # left_elbow = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.LEFT_ELBOW
+            # )
+            left_elbow = pose_landmarks[6]
+            # right_elbow = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.RIGHT_ELBOW
+            # )
+            right_elbow = pose_landmarks[3]
+            # left_wrist = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.LEFT_WRIST
+            # )
+            left_wrist = pose_landmarks[7]
+            # right_wrist = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.RIGHT_WRIST
+            # )
+            right_wrist = pose_landmarks[4]
 
-            left_shoulder = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.LEFT_SHOULDER
-            )
-            right_shoulder = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.RIGHT_SHOULDER
-            )
+            # left_hip = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.LEFT_HIP
+            # )
+            left_hip = pose_landmarks[11]
+            # right_hip = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.RIGHT_HIP
+            # )
+            right_hip = pose_landmarks[8]
+            # left_knee = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.LEFT_KNEE
+            # )
+            left_knee = pose_landmarks[12]
+            # right_knee = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.RIGHT_KNEE
+            # )
+            right_knee = pose_landmarks[9]
 
-            left_elbow = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.LEFT_ELBOW
-            )
-            right_elbow = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.RIGHT_ELBOW
-            )
-
-            left_wrist = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.LEFT_WRIST
-            )
-            right_wrist = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.RIGHT_WRIST
-            )
-
-            left_pinky = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.LEFT_PINKY
-            )
-            right_pinky = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.RIGHT_PINKY
-            )
-
-            left_index = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.LEFT_INDEX
-            )
-            right_index = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.RIGHT_INDEX
-            )
-
-            left_thumb = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.LEFT_THUMB
-            )
-            right_thumb = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.RIGHT_THUMB
-            )
-
-            left_hip = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.LEFT_HIP
-            )
-            right_hip = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.RIGHT_HIP
-            )
-
-            left_knee = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.LEFT_KNEE
-            )
-            right_knee = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.RIGHT_KNEE
-            )
-
-            left_ankle = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.LEFT_ANKLE
-            )
-            right_ankle = get_landmark_coordinates(
-                pose_landmarks, mp_pose.PoseLandmark.RIGHT_ANKLE
-            )
-
+            # left_ankle = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.LEFT_ANKLE
+            # )
+            left_ankle = pose_landmarks[13]
+            # right_ankle = get_landmark_coordinates(
+            #     pose_landmarks, mp_pose.PoseLandmark.RIGHT_ANKLE
+            # )
+            right_ankle = pose_landmarks[10]
             # Calculate angles
             left_shoulder_angle = calculate_angle(left_elbow, left_shoulder, left_hip)
             right_shoulder_angle = calculate_angle(
@@ -169,12 +154,6 @@ class BodyState:
                 right_elbow,
                 left_wrist,
                 right_wrist,
-                left_pinky,
-                right_pinky,
-                left_index,
-                right_index,
-                left_thumb,
-                right_thumb,
                 left_shoulder_angle,
                 right_shoulder_angle,
                 left_elbow_angle,
@@ -202,8 +181,6 @@ class BodyState:
                 right_eye,
                 left_ear,
                 right_ear,
-                mouth_left,
-                mouth_right,
                 left_shoulder,
                 right_shoulder,
                 left_right_eyes_slope,
@@ -277,33 +254,6 @@ class BodyState:
                         2,
                         cv2.LINE_AA,
                     )
-
-            if self.show_coords:
-                self.log = f"""
-nose:            {log_landmark(nose)}
-left_eye:        {log_landmark(left_eye)}              right_eye:       {log_landmark(right_eye)}
-left_ear:        {log_landmark(left_ear)}              right_ear:       {log_landmark(right_ear)}
-mouth_left:      {log_landmark(mouth_left)}            mouth_right:     {log_landmark(mouth_right)}
-left_shoulder:   {log_landmark(left_shoulder)}         right_shoulder:  {log_landmark(right_shoulder)}
-left_elbow:      {log_landmark(left_elbow)}            right_elbow:     {log_landmark(right_elbow)}
-left_wrist:      {log_landmark(left_wrist)}            right_wrist:     {log_landmark(right_wrist)}
-left_pinky:      {log_landmark(left_pinky)}            right_pinky:     {log_landmark(right_pinky)}
-left_index:      {log_landmark(left_index)}            right_index:     {log_landmark(right_index)}
-left_thumb:      {log_landmark(left_thumb)}            right_thumb:     {log_landmark(right_thumb)}
-left_hip:        {log_landmark(left_hip)}              right_hip:       {log_landmark(right_hip)}
-left_knee:       {log_landmark(left_knee)}             right_knee:      {log_landmark(right_knee)}
-left_ankle:      {log_landmark(left_ankle)}            right_ankle:     {log_landmark(right_ankle)}
-
-lr_eyes_slope:        {log_angle(left_right_eyes_slope)}
-left_shoulder_angle:  {log_angle(left_shoulder_angle)}   right_shoulder_angle: {log_angle(right_shoulder_angle)}
-left_elbow_angle:     {log_angle(left_elbow_angle)}      right_elbow_angle:    {log_angle(right_elbow_angle)}
-left_hip_angle:       {log_angle(left_hip_angle)}        right_hip_angle:      {log_angle(right_hip_angle)}
-left_knee_angle:      {log_angle(left_knee_angle)}       right_knee_angle:     {log_angle(right_knee_angle)}
-left_hip_knee_angle:  {log_angle(left_hip_knee_angle)}   right_hip_knee_angle: {log_angle(right_hip_knee_angle)}
---------------------------------------------------------------------
-"""
-            else:
-                self.log = ""
 
         except Exception:
             print(traceback.format_exc())

@@ -65,37 +65,37 @@ class LegsState:
         if mode == "Driving":
             return
 
+        # if (
+        #     left_knee[3] > self.KNEE_MIN_VISIBILITY
+        #     and right_knee[3] > self.KNEE_MIN_VISIBILITY
+        # ):
         if (
-            left_knee[3] > self.KNEE_MIN_VISIBILITY
-            and right_knee[3] > self.KNEE_MIN_VISIBILITY
+            left_knee_angle < self.KNEE_UP_MAX_ANGLE
+            and right_knee_angle < self.KNEE_UP_MAX_ANGLE
         ):
-            if (
-                left_knee_angle < self.KNEE_UP_MAX_ANGLE
-                and right_knee_angle < self.KNEE_UP_MAX_ANGLE
-            ):
-                # if not self.squat:
-                #     self.squat = True
-                print("SQUAD")
-                events.add("squat")
-            else:
-                self.squat = False
-            # If players are squating so we don't need to concern if they are stepping 
-            if self.squat:
-                return
-            
-            if left_knee_angle < self.KNEE_UP_MAX_ANGLE:
-                if not self.left_up_state:
-                    self.left_up_state = True
-                    self.steps += 1
-            else:
-                self.left_up_state = False
+            # if not self.squat:
+            #     self.squat = True
+            print("SQUAD")
+            events.add("squat")
+        else:
+            self.squat = False
+        # If players are squating so we don't need to concern if they are stepping 
+        if self.squat:
+            return
+        
+        if left_knee_angle < self.KNEE_UP_MAX_ANGLE:
+            if not self.left_up_state:
+                self.left_up_state = True
+                self.steps += 1
+        else:
+            self.left_up_state = False
 
-            if right_knee_angle < self.KNEE_UP_MAX_ANGLE:
-                if not self.right_up_state:
-                    self.right_up_state = True
-                    self.steps += 1
-            else:
-                self.right_up_state = False
+        if right_knee_angle < self.KNEE_UP_MAX_ANGLE:
+            if not self.right_up_state:
+                self.right_up_state = True
+                self.steps += 1
+        else:
+            self.right_up_state = False
 
     def __str__(self):
         return f"steps: {self.steps}"

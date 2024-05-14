@@ -21,7 +21,8 @@ from PySide6.QtWidgets import (
     QSizePolicy,
 )
 from pynput.keyboard import Key
-from cv2_thread import Cv2Thread
+# from cv2_thread import Cv2Thread
+from estimator import Cv2Thread
 from body.const import IMAGE_HEIGHT, IMAGE_WIDTH
 
 # Config for mediapipe pose solution
@@ -29,7 +30,6 @@ mp_config = dict(
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5,
     model_complexity=1,
-    enable_segmentation=True,
 )
 
 body_modes = [
@@ -198,9 +198,6 @@ inputs = [
         max=2,
         value=mp_config["model_complexity"],
         hidden=True,
-    ),
-    dict(
-        name="Show segmentation", key="enable_segmentation", type="mp", input="checkbox"
     ),
     dict(name="Show angles", key="draw_angles", type="body", input="checkbox"),
     dict(name="Show body coords", key="show_coords", type="body", input="checkbox"),

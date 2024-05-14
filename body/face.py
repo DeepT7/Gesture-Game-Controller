@@ -19,8 +19,6 @@ class FaceState:
         right_eye,
         left_ear,
         right_ear,
-        mouth_left,
-        mouth_right,
         left_shoulder,
         right_shoulder,
         left_right_eyes_slope,
